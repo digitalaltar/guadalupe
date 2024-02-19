@@ -1,16 +1,28 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'GLTFLoader';
 import { OrbitControls } from 'OrbitControls';
+import { RGBELoader } from 'RGBELoader';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setClearColor(0x111111);
+renderer.setClearColor(0x000000, 0); // Transparent clear color
 renderer.gammaOutput = true; // Ensures that textures and colors are gamma-corrected
 renderer.gammaFactor = 2.2; // Standard gamma correction
 renderer.outputEncoding = THREE.sRGBEncoding; // Better color accuracy
 document.body.appendChild(renderer.domElement);
+
+renderer.domElement.style.background = 'linear-gradient(180deg, #333333 0%, #000000 100%)';
+
+new RGBELoader()
+    .load('./assets/moonlit_golf_4k.hdr', function(texture) {
+        console.log("HDR Loaded Successfully");
+        texture.mapping = THREE.EquirectangularReflectionMapping;
+        scene.environment = texture;
+    }, undefined, function (error) {
+        console.error("Error loading HDR:", error);
+    });
 
 // General lighting that applies to the whole scene
 const ambientLight = new THREE.AmbientLight(0xffffff, 1);
@@ -63,7 +75,7 @@ function hslToRgb(h, s, l) {
 // Load the particle texture
 const particleTexture = new THREE.TextureLoader().load('../assets/fire.png', () => {
     // Once the texture has loaded, calculate the aspect ratio
-    const textureAspectRatio = particleTexture.image.width / particleTexture.image.height;
+    const textureAspectRatio = particleTexture.width / particleTexture.height;
 
     // Adjust the size of the particles based on the aspect ratio
     particleMaterial.size *= textureAspectRatio;
@@ -155,6 +167,7 @@ loader.load(
         adjustParticlePositions(particles, model, window.innerWidth, window.innerHeight);
 
         animate(); // Call 'animate' after the model is added to the scene
+
     },
     undefined,
     function (error) {
