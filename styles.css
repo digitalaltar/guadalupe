@@ -3,4 +3,109 @@ body, html, canvas {
 	padding: 0;
 	background: #202020;
 	color: white;
+	font-family: monospace, sans-serif;
+	font-size: 1rem;
+}
+.details {
+	position: absolute;
+	bottom: 1rem;
+	font-size: 1rem;
+	background: rgba(0,0,0,.8);
+	color: teal;
+	position: bottom;
+	cursor: pointer;
+}
+#title, #title-details {
+	left: 1rem;
+}
+#artist, #artist-details {
+	right: 1rem;
+}
+a:link, a:visited {
+	color: teal;
+	text-decoration: none;
+}
+a:hover {
+	color: turquoise;
+}
+.more-details {
+	position: absolute;
+	bottom: 3rem;
+	background: rgba(0,0,0,.8);
+}
+.more-details p {
+	padding: 15px 30px;
+}
+#title-details {
+	min-width: 400px;
+	max-width: 60%;
+}
+#artist-details {
+	min-width: 300px;
+	max-width: 50%;
+}
+/* ICONS */
+.details .icon {
+	top: 3px;
+	color: gray;
+}
+.details:hover {
+	color: turquoise;
+}
+.details:hover .icon {
+	color: white;
+}
+
+/* Info */
+.gg-info {
+    box-sizing: border-box;
+    position: relative;
+    display: inline-block;
+    transform: scale(var(--ggs,1));
+    width: 20px;
+    height: 20px;
+    border: 2px solid;
+    border-radius: 40px
+}
+.gg-info::after,
+.gg-info::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    border-radius: 3px;
+    width: 2px;
+    background: currentColor;
+    left: 7px
+}
+.gg-info::after {
+    bottom: 2px;
+    height: 8px
+}
+.gg-info::before {
+    height: 2px;
+    top: 2px
+}
+
+/* Copyright */
+.gg-copyright,
+.gg-copyright::after {
+    box-sizing: border-box;
+    position: relative;
+    display: inline-block;
+    transform: scale(var(--ggs,1));
+    width: 18px;
+    height: 18px;
+    border: 2px solid;
+    border-radius: 40px
+}
+.gg-copyright::after {
+    content: "";
+    position: absolute;
+    border-right-color: transparent;
+    width: 8px;
+    height: 8px;
+    top: 3px;
+    left: 3px;
+    transform: none
 }

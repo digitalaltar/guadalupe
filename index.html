@@ -7,7 +7,15 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <main></main>
+    <div id="title" class="details"><i class="icon gg-info"></i> Tonantzin Guadalupe</div>
+    <div id="title-details" class="more-details" style="display:none;">
+        <p>Welcome to a serene digital realm, where technology meets spiritual contemplation. Through a meticulously crafted 3D scene powered by three.js, you are invited to be immersed in and engage with a programmatic tranquil space. With seamless VR integration and responsive design, Tonantzin Guadalupe offers a modern take on sacred reflection, bridging the gap between the digital and the divine.</p>
+    </div>
+    <div id="artist" class="details"><i class="icon gg-copyright"></i> Digital Altar</div>
+    <div id="artist-details" class="more-details" style="display:none;">
+        <p>&copy; 2024 by Digital Altar<br><br>
+            Visit <a href="https://digitalaltar.com">DigitalAltar.com</a> to learn more.</p>
+    </div>
     <script type="importmap">
     {
         "imports": {
@@ -21,5 +29,20 @@
     }
     </script>
     <script type="module" src="./scripts/guadalupe.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle visibility of #title-details when #title is clicked
+            document.getElementById('title').addEventListener('click', function() {
+                var details = document.getElementById('title-details');
+                details.style.display = details.style.display === 'none' ? 'block' : 'none';
+            });
+
+            // Toggle visibility of #artist-details when #artist is clicked
+            document.getElementById('artist').addEventListener('click', function() {
+                var details = document.getElementById('artist-details');
+                details.style.display = details.style.display === 'none' ? 'block' : 'none';
+            });
+        });
+    </script>
 </body>
 </html>
