@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'GLTFLoader';
 import { OrbitControls } from 'OrbitControls';
 import { RGBELoader } from 'RGBELoader';
+import { VRButton } from 'VRButton';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -12,6 +13,21 @@ renderer.gammaOutput = true; // Ensures that textures and colors are gamma-corre
 renderer.gammaFactor = 2.2; // Standard gamma correction
 renderer.outputEncoding = THREE.sRGBEncoding; // Better color accuracy
 document.body.appendChild(renderer.domElement);
+// Check for WebXR support
+if (navigator.xr) {
+    navigator.xr.isSessionSupported('immersive-vr').then((supported) => {
+        if (supported) {
+            // WebXR is supported, so we add the VRButton to the document
+            document.body.appendChild(VRButton.createButton(renderer));
+            renderer.xr.enabled = true;
+        } else {
+            // WebXR is not supported, so we can choose to hide or not add the VR button,
+            // or display some alternative content or message to the user.
+        }
+    });
+} else {
+    // navigator.xr does not exist, indicating that WebXR is definitely not supported
+}
 
 renderer.domElement.style.background = 'linear-gradient(180deg, #333333 0%, #000000 100%)';
 
