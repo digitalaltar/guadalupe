@@ -251,11 +251,13 @@ function onSessionStart() {
     camera.position.set(0, 1, -10); // Example position (x, y, z)
     if (model) {
         model.position.set(0, 0, -15); // Position specific to VR
-        model.scale.set(2, 2, 2);
-    }}
+        model.scale.set(3, 3, 3);
+    }
 
 // Function to reset camera when VR session ends
 function onSessionEnd() {
     // Reset camera position/orientation to non-VR defaults
-    camera.position.set(0, 1, -10); // Example default position
+    camera.position.set(0, 0, 0); // Example default position
+    model.scale.set(5, 5, 5);
+    model.position.set(0, -6.5, 0);
 }
