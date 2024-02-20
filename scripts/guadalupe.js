@@ -253,6 +253,7 @@ function onSessionStart() {
         model.position.set(0, 0, -15); // Position specific to VR
         model.scale.set(3, 3, 3);
     }
+}
 
 // Function to reset camera when VR session ends
 function onSessionEnd() {
