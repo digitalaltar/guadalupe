@@ -139,12 +139,11 @@ scene.add(particleSystem);
 
 // Define the animate function before it's used
 function animate() {
-    requestAnimationFrame(animate);
-
-    updateFlicker(); // Apply the flickering effect
-
-    controls.update();
-    renderer.render(scene, camera);
+    renderer.setAnimationLoop(function () {
+        updateFlicker(); // Your custom function to update scene elements
+        controls.update();
+        renderer.render(scene, camera);
+    });
 }
 
 // Now we can safely reference 'animate' without causing a ReferenceError
@@ -191,6 +190,8 @@ loader.load(
         console.error('An error happened', error);
     }
 );
+
+animate();
 
 window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
