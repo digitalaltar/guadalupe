@@ -250,8 +250,8 @@ function onSessionStart() {
     // Set camera to a desired position and orientation
     camera.position.set(0, 1, -10); // Example position (x, y, z)
     if (model) {
-        model.position.set(0, 0, -20); // Position specific to VR
-        model.scale.set(1, 1, 1);
+        model.position.set(0, 0, -15); // Position specific to VR
+        model.scale.set(2, 2, 2);
     }}
 
 // Function to reset camera when VR session ends
