@@ -249,14 +249,13 @@ function updateFlicker() {
 function onSessionStart() {
     // Set camera to a desired position and orientation
     camera.position.set(0, 1, -10); // Example position (x, y, z)
-    camera.rotation.set(0, 0, 0); // Example rotation (x, y, z) in radians
     if (model) {
         model.position.set(0, 0, 0); // Position specific to VR
+        model.scale.set(1, 1, 1);
     }}
 
 // Function to reset camera when VR session ends
 function onSessionEnd() {
     // Reset camera position/orientation to non-VR defaults
     camera.position.set(0, 1, -10); // Example default position
-    camera.rotation.set(0, 0, 0); // Example default rotation
 }
