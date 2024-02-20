@@ -15,6 +15,8 @@ renderer.xr.enabled = true;
 renderer.outputEncoding = THREE.sRGBEncoding; // Better color accuracy
 document.body.appendChild(renderer.domElement);
 
+let model;
+
 // Check for WebXR support
 if (navigator.xr) {
     navigator.xr.isSessionSupported('immersive-vr').then((supported) => {
@@ -159,7 +161,7 @@ loader.load(
         scene.add(ambientLight);
 
         // The model
-        const model = gltf.scene;
+        model = gltf.scene; // Assign the loaded model to the global 'model' variable
         scene.add(model);
         model.scale.set(5, 5, 5);
         model.position.set(0, -6.5, 0);
@@ -246,13 +248,15 @@ function updateFlicker() {
 // Function to adjust camera for VR session start
 function onSessionStart() {
     // Set camera to a desired position and orientation
-    camera.position.set(0, 1.6, -20); // Example position (x, y, z)
+    camera.position.set(0, 1, -10); // Example position (x, y, z)
     camera.rotation.set(0, 0, 0); // Example rotation (x, y, z) in radians
-}
+    if (model) {
+        model.position.set(0, 0, 0); // Position specific to VR
+    }}
 
 // Function to reset camera when VR session ends
 function onSessionEnd() {
     // Reset camera position/orientation to non-VR defaults
-    camera.position.set(0, 1, -20); // Example default position
+    camera.position.set(0, 1, -10); // Example default position
     camera.rotation.set(0, 0, 0); // Example default rotation
 }
