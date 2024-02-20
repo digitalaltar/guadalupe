@@ -11,15 +11,16 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setClearColor(0x000000, 0); // Transparent clear color
 renderer.gammaOutput = true; // Ensures that textures and colors are gamma-corrected
 renderer.gammaFactor = 2.2; // Standard gamma correction
+renderer.xr.enabled = true;
 renderer.outputEncoding = THREE.sRGBEncoding; // Better color accuracy
 document.body.appendChild(renderer.domElement);
+
 // Check for WebXR support
 if (navigator.xr) {
     navigator.xr.isSessionSupported('immersive-vr').then((supported) => {
         if (supported) {
             // WebXR is supported, so we add the VRButton to the document
             document.body.appendChild(VRButton.createButton(renderer));
-            renderer.xr.enabled = true;
         } else {
             // WebXR is not supported, so we can choose to hide or not add the VR button,
             // or display some alternative content or message to the user.
