@@ -258,7 +258,7 @@ function onSessionStart() {
 // Function to reset camera when VR session ends
 function onSessionEnd() {
     // Reset camera position/orientation to non-VR defaults
-    camera.position.set(0, 0, 0); // Example default position
+    camera.position.set(0, 0, -20); // Example default position
     model.scale.set(5, 5, 5);
     model.position.set(0, -6.5, 0);
 }
