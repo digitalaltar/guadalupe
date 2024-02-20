@@ -21,6 +21,9 @@ if (navigator.xr) {
         if (supported) {
             // WebXR is supported, so we add the VRButton to the document
             document.body.appendChild(VRButton.createButton(renderer));
+
+            renderer.xr.addEventListener('sessionstart', onSessionStart);
+            renderer.xr.addEventListener('sessionend', onSessionEnd);
         } else {
             // WebXR is not supported, so we can choose to hide or not add the VR button,
             // or display some alternative content or message to the user.
@@ -238,4 +241,18 @@ function updateFlicker() {
     // The opacity fluctuates more subtly, between 0.7 and 1 for example
     const opacityFluctuation = 0.3 * (0.5 - Math.random());
     particleMaterial.opacity = 0.85 + opacityFluctuation;
+}
+
+// Function to adjust camera for VR session start
+function onSessionStart() {
+    // Set camera to a desired position and orientation
+    camera.position.set(0, 1.6, 0); // Example position (x, y, z)
+    camera.rotation.set(0, 0, 0); // Example rotation (x, y, z) in radians
+}
+
+// Function to reset camera when VR session ends
+function onSessionEnd() {
+    // Reset camera position/orientation to non-VR defaults
+    camera.position.set(0, 1, 10); // Example default position
+    camera.rotation.set(0, 0, 0); // Example default rotation
 }
