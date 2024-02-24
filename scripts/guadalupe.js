@@ -203,11 +203,10 @@ function animate() {
                 if (axes.length >= 4) {
                     const horizontal = axes[2];
                     const vertical = axes[3];
-                    const moveSpeed = 0.02;
 
                     if (cylinder) {
-                        cylinder.rotation.y += horizontal * moveSpeed;
-                        cylinder.position.z += vertical * moveSpeed;
+                        cylinder.rotation.y += horizontal * 0.02;
+                        cylinder.position.z += vertical * 0.02;
                     }
                 }
             }
