@@ -39,7 +39,7 @@ if (navigator.xr) {
 renderer.domElement.style.background = 'linear-gradient(180deg, #333333 0%, #000000 100%)';
 
 new RGBELoader()
-    .load('./assets/moonlit_golf_4k.hdr', function(texture) {
+    .load('./assets/nighttime.hdr', function(texture) {
         texture.mapping = THREE.EquirectangularReflectionMapping;
         scene.environment = texture;
     }, undefined, function (error) {
@@ -146,7 +146,7 @@ scene.add(particleSystem);
 // Now we can safely reference 'animate' without causing a ReferenceError
 const loader = new GLTFLoader();
 loader.load(
-    '../assets/scene.gltf',
+    '../assets/guadalupe.gltf',
     function (gltf) {
         // Set some ambient light
         const ambientLight = new THREE.AmbientLight(0xffffff, 1); // Increased intensity
