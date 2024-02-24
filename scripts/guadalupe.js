@@ -16,6 +16,7 @@ renderer.outputEncoding = THREE.sRGBEncoding; // Better color accuracy
 document.body.appendChild(renderer.domElement);
 
 let model;
+let currentSession = null;
 
 // Check for WebXR support
 if (navigator.xr) {
@@ -39,7 +40,6 @@ renderer.domElement.style.background = 'linear-gradient(180deg, #333333 0%, #000
 
 new RGBELoader()
     .load('./assets/moonlit_golf_4k.hdr', function(texture) {
-        console.log("HDR Loaded Successfully");
         texture.mapping = THREE.EquirectangularReflectionMapping;
         scene.environment = texture;
     }, undefined, function (error) {
@@ -62,10 +62,11 @@ const pointLight2 = new THREE.PointLight(0xffffff, 1, 100);
 pointLight2.position.set(-2, 4, 4);
 scene.add(pointLight2);
 
-// Controls
+// Initialize OrbitControls
 const controls = new OrbitControls(camera, renderer.domElement);
-camera.position.set(0, 1, 10);
-controls.update();
+controls.maxPolarAngle = Math.PI / 2;
+controls.minPolarAngle = Math.PI / 2;
+camera.position.set(0, 0, 10);
 
 // Particles System
 function hslToRgb(h, s, l) {
@@ -142,15 +143,6 @@ const particleSystem = new THREE.Points(particles, particleMaterial);
 scene.add(particleSystem);
 
 
-// Define the animate function before it's used
-function animate() {
-    renderer.setAnimationLoop(function () {
-        updateFlicker(); // Your custom function to update scene elements
-        controls.update();
-        renderer.render(scene, camera);
-    });
-}
-
 // Now we can safely reference 'animate' without causing a ReferenceError
 const loader = new GLTFLoader();
 loader.load(
@@ -186,9 +178,6 @@ loader.load(
 
         // Adjust particle positions to surround the model
         adjustParticlePositions(particles, model, window.innerWidth, window.innerHeight);
-
-        animate(); // Call 'animate' after the model is added to the scene
-
     },
     undefined,
     function (error) {
@@ -196,7 +185,37 @@ loader.load(
     }
 );
 
-animate();
+// Renderer and scene must already be set up
+const controller1 = renderer.xr.getController(0);
+scene.add(controller1);
+const controller2 = renderer.xr.getController(1);
+scene.add(controller2);
+
+
+function animate() {
+
+    updateFlicker();
+
+    if (currentSession) {
+        currentSession.inputSources.forEach((inputSource) => {
+            if (inputSource && inputSource.gamepad && inputSource.gamepad.axes.length > 0) {
+                const axes = inputSource.gamepad.axes;
+                if (axes.length >= 4) {
+                    const horizontal = axes[2];
+
+                    if (model) {
+                        model.rotation.y += horizontal * 0.02;
+                    }
+                }
+            }
+        });
+    }
+
+    renderer.render(scene, camera);
+}
+
+// Use this to handle the animation loop in VR mode
+renderer.setAnimationLoop(animate);
 
 window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -247,6 +266,9 @@ function updateFlicker() {
 
 // Function to adjust camera for VR session start
 function onSessionStart() {
+    currentSession = renderer.xr.getSession();
+    controls.enabled = false; // Disable OrbitControls in VR mode
+
     // Set camera to a desired position and orientation
     camera.position.set(0, 1, 10); // Example position (x, y, z)
     if (model) {
@@ -257,8 +279,14 @@ function onSessionStart() {
 
 // Function to reset camera when VR session ends
 function onSessionEnd() {
+    currentSession = null;
+
     // Reset camera position/orientation to non-VR defaults
     camera.position.set(0, 0, 10); // Example default position
     model.scale.set(5, 5, 5);
     model.position.set(0, -6.5, 0);
+
+    // Re-enable and update controls if they were disabled during VR session
+    controls.enabled = true;
+    controls.update();
 }
