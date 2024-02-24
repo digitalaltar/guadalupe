@@ -202,9 +202,12 @@ function animate() {
                 const axes = inputSource.gamepad.axes;
                 if (axes.length >= 4) {
                     const horizontal = axes[2];
+                    const vertical = axes[3];
+                    const moveSpeed = 0.02;
 
-                    if (model) {
-                        model.rotation.y += horizontal * 0.02;
+                    if (cylinder) {
+                        cylinder.rotation.y += horizontal * moveSpeed;
+                        cylinder.position.z += vertical * moveSpeed;
                     }
                 }
             }
