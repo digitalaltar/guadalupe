@@ -9,7 +9,6 @@ body, html, canvas {
 .details {
 	position: absolute;
 	bottom: 1rem;
-	font-size: 1rem;
 	background: rgba(0,0,0,.8);
 	color: teal;
 	position: bottom;
@@ -43,6 +42,16 @@ a:hover {
 #artist-details {
 	min-width: 300px;
 	max-width: 50%;
+}
+.intro {
+	font-size: 130%;
+	margin-bottom: 0;
+}
+.continued {
+	margin-top: 0;
+}
+.intro span {
+	color: yellow;
 }
 /* ICONS */
 .details .icon {
@@ -108,4 +117,12 @@ a:hover {
     top: 3px;
     left: 3px;
     transform: none
+}
+@media screen and (max-width: 600px) {
+	body, html, canvas {
+		font-size: 0.9rem;
+	}
+	.gg-info, .gg-copyright {
+	    transform: scale(var(--ggs,0.8));		
+	}
 }
