@@ -146,7 +146,7 @@ scene.add(particleSystem);
 // Now we can safely reference 'animate' without causing a ReferenceError
 const loader = new GLTFLoader();
 loader.load(
-    '../assets/guadalupe.gltf',
+    '../assets/scene.gltf',
     function (gltf) {
         // Set some ambient light
         const ambientLight = new THREE.AmbientLight(0xffffff, 1); // Increased intensity
